@@ -166,7 +166,8 @@
     <mat-card-title class="card-title">Overall Kill Statistics</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    Shows your overall kills by time and faction (including your faction).
+    Shows your overall kills by time and faction
+    <br>(including your faction).
     <p>Kills: All Time</p>
     <app-killchart [kill_map]="this.character.kills" [index]="0"
     [killchartId]="'killchart1'" [kill_type]="'overall'"></app-killchart>
@@ -209,7 +210,8 @@
     <mat-card-title class="card-title">Overall Death Statistics</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    Shows your overall deaths by time and by faction (including your faction).
+    Shows your overall deaths by time and by faction
+    <br>(including your faction).
     <p>Deaths: All Time</p>
     <app-deathchart [death_map]="this.character.deaths" [index]="0"
     [deathchartId]="'deathchart1'" [death_type]="'overall'"></app-deathchart>
