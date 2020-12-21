@@ -11,16 +11,13 @@ StudentID: 25097522
 	Once all dependencies are installed, run ng serve --open and click the load data button.
 	The data should be loaded under 1 minute.
 
-## Changes from plan
+## Planned changes:
+   * Create base components to display charts and change current classes for statistics to pass data to those charts to be displayed.
+   * Enable toggle for time frame of the charts instead of displaying them all at once.
+   * Allow users to view two characters side by side for comparison.
 
-	Some of the requirements I listed are not supported by the API. For example, vehicles don't have values saved as all time, monthly, weekly, and daily.
-	Also, I changed showing yearly to showing all time as that is the standard for planetside stat trackers I have seen.
-
-	I have also decided to add a graph of the class of enemies who killed the player, and have decided to not display all time, monthly, weekly, daily 
-	for all stats related to kills and deaths. Instead, there is an overall graph where players can see each time frame, and an all time graph for
-	specific kills/deaths such as class kills.
-
-	I could not get toggle to work, however, so all time frame graphs are displayed.
+## Current Issues:
+   * New players have missing fields in their data. Need to revise the way I grab information for certain statistics.
 
 ## Citation
 
