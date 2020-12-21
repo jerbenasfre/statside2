@@ -54,7 +54,7 @@ export class KdchartComponent implements OnInit {
     var myChart = new Chart(this.kdchartId, {
       type: 'doughnut',
       data: {
-        labels: ["Kills","Deaths"],
+        labels: ['Kills','Deaths'],
         datasets: [{
           backgroundColor: [
             'rgba(250, 200, 200, 0.8)',

@@ -12,6 +12,7 @@ import { ps2ApiService } from './services/ps2api.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatInputModule } from '@angular/material/input';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PlaytimechartComponent } from './playtimechart/playtimechart.component';
@@ -39,6 +40,7 @@ import { KdchartComponent } from './kdchart/kdchart.component';
     MatCardModule,
     MatProgressBarModule,
     MatRadioModule,
+    MatInputModule,
     FlexLayoutModule,
     FormsModule
   ],

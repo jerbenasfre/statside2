@@ -32,7 +32,7 @@ export class PlaytimechartComponent implements OnInit {
     let labels = [];
 
     // set chart up for infantry playtime
-    if(this.data_type === "infantry"){
+    if(this.data_type === 'infantry'){
       playtime_data = [0,0,0,0,0,0];
       labels = ['Infiltrator', 'Light Assault', 'Medic','Engineer','Heavy Assault','Max'];
 
@@ -46,27 +46,27 @@ export class PlaytimechartComponent implements OnInit {
     }
     // set chart up for vehicle playtime
     else{
-      labels = ["Flash","Sunderer","Lightning","Magrider","Vanguard","Prowler",
-      "Scythe","Reaver","Mosquito","Liberator","Galaxy","Harraser","Valkyrie",
-      "Ant","Colossus","Bastion","Javelin"];
+      labels = ['Flash','Sunderer','Lightning','Magrider','Vanguard','Prowler',
+      'Scythe','Reaver','Mosquito','Liberator','Galaxy','Harraser','Valkyrie',
+      'Ant','Colossus','Bastion','Javelin'];
       playtime_data = [
-        this.playtime.get("flash"),
-        this.playtime.get("sunderer"),
-        this.playtime.get("lightning"),
-        this.playtime.get("magrider"),
-        this.playtime.get("vanguard"),
-        this.playtime.get("prowler"),
-        this.playtime.get("scythe"),
-        this.playtime.get("reaver"),
-        this.playtime.get("mosquito"),
-        this.playtime.get("liberator"),
-        this.playtime.get("galaxy"),
-        this.playtime.get("harasser"),
-        this.playtime.get("valkyrie"),
-        this.playtime.get("ant"),
-        this.playtime.get("colossus"),
-        this.playtime.get("bastion"),
-        this.playtime.get("javelin")
+        this.playtime.get('flash'),
+        this.playtime.get('sunderer'),
+        this.playtime.get('lightning'),
+        this.playtime.get('magrider'),
+        this.playtime.get('vanguard'),
+        this.playtime.get('prowler'),
+        this.playtime.get('scythe'),
+        this.playtime.get('reaver'),
+        this.playtime.get('mosquito'),
+        this.playtime.get('liberator'),
+        this.playtime.get('galaxy'),
+        this.playtime.get('harasser'),
+        this.playtime.get('valkyrie'),
+        this.playtime.get('ant'),
+        this.playtime.get('colossus'),
+        this.playtime.get('bastion'),
+        this.playtime.get('javelin')
       ];
     }
 

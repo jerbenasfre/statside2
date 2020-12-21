@@ -1,3 +1,19 @@
+.form-style {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  background-color: #057589CC;
+  border: 3px solid #4CD8E0;
+  border-radius: 3px;
+}
+
+.input-style {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  background-color: #057589CC;
+}
+
 .header {
   background-image: url('../assets/scifi_display_header.png');
   background-size: cover;

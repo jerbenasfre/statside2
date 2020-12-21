@@ -48,28 +48,28 @@ export class KillchartComponent implements OnInit {
       }
     }
     // if vehicle view, display in terms of vehicles and get vehicle data
-    else if(this.kill_type === "vehicle"){
-      labels = ["Flash","Sunderer","Lightning","Magrider","Vanguard","Prowler",
-      "Scythe","Reaver","Mosquito","Liberator","Galaxy","Harraser","Valkyrie",
-      "Ant","Colossus","Bastion","Javelin"];
+    else if(this.kill_type === 'vehicle'){
+      labels = ['Flash','Sunderer','Lightning','Magrider','Vanguard','Prowler',
+      'Scythe','Reaver','Mosquito','Liberator','Galaxy','Harraser','Valkyrie',
+      'Ant','Colossus','Bastion','Javelin'];
       kill_data = [
-        this.kill_map.get("flash"),
-        this.kill_map.get("sunderer"),
-        this.kill_map.get("lightning"),
-        this.kill_map.get("magrider"),
-        this.kill_map.get("vanguard"),
-        this.kill_map.get("prowler"),
-        this.kill_map.get("scythe"),
-        this.kill_map.get("reaver"),
-        this.kill_map.get("mosquito"),
-        this.kill_map.get("liberator"),
-        this.kill_map.get("galaxy"),
-        this.kill_map.get("harasser"),
-        this.kill_map.get("valkyrie"),
-        this.kill_map.get("ant"),
-        this.kill_map.get("colossus"),
-        this.kill_map.get("bastion"),
-        this.kill_map.get("javelin")];
+        this.kill_map.get('flash'),
+        this.kill_map.get('sunderer'),
+        this.kill_map.get('lightning'),
+        this.kill_map.get('magrider'),
+        this.kill_map.get('vanguard'),
+        this.kill_map.get('prowler'),
+        this.kill_map.get('scythe'),
+        this.kill_map.get('reaver'),
+        this.kill_map.get('mosquito'),
+        this.kill_map.get('liberator'),
+        this.kill_map.get('galaxy'),
+        this.kill_map.get('harasser'),
+        this.kill_map.get('valkyrie'),
+        this.kill_map.get('ant'),
+        this.kill_map.get('colossus'),
+        this.kill_map.get('bastion'),
+        this.kill_map.get('javelin')];
     }
     // if infantry view, display in terms of classes and get classes data
     else{

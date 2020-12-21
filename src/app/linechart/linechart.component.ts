@@ -35,21 +35,21 @@ export class LinechartComponent implements OnInit {
     // Gets monthly, weekly or daily depending on val of index.
     // Also set appropriate labels
     if(this.index == 0){
-      data_array = this.data.get("monthly");
-      labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-               "Sep", "Oct", "Nov", "Dec"];
+      data_array = this.data.get('monthly');
+      labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',
+               'Sep', 'Oct', 'Nov', 'Dec'];
     }
     else if(this.index == 1){
-      data_array = this.data.get("weekly");
-      labels = ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8",
-               "W9", "W10", "W11", "W12", "W13"];
+      data_array = this.data.get('weekly');
+      labels = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8',
+               'W9', 'W10', 'W11', 'W12', 'W13'];
     }
     else{
-      data_array = this.data.get("daily");
-      labels = ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10",
-               "D11", "D12", "D13","D14","D15","D16", "D17", "D18", "D19",
-               "D20", "D21", "D22", "D23","D24","D25","D26", "D27", "D28",
-               "D29", "D30","D31"];
+      data_array = this.data.get('daily');
+      labels = ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10',
+               'D11', 'D12', 'D13','D14','D15','D16', 'D17', 'D18', 'D19',
+               'D20', 'D21', 'D22', 'D23','D24','D25','D26', 'D27', 'D28',
+               'D29', 'D30','D31'];
     }
 
     var myChart = new Chart(this.linechartId, {
@@ -59,7 +59,7 @@ export class LinechartComponent implements OnInit {
         datasets: [{
           data: data_array,
           label: this.label,
-          borderColor: "#c45850",
+          borderColor: '#c45850',
           fill: false
         }]
       },

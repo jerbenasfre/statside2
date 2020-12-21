@@ -32,17 +32,17 @@ export class BasechartComponent implements OnInit {
     let capture_data = 0;
     let defense_data = 0;
 
-    let period = "";//selected time period(monthly/weekly/daily)
+    let period = '';//selected time period(monthly/weekly/daily)
 
     // Gets monthly, weekly or daily depending on val of index
     if(this.index == 0){
-      period="monthly";
+      period='monthly';
     }
     else if(this.index == 1){
-      period="weekly";
+      period='weekly';
     }
     else{
-      period="daily";
+      period='daily';
     }
 
     // Iterate through all elements of time frame array.
@@ -55,9 +55,9 @@ export class BasechartComponent implements OnInit {
     var myChart = new Chart(this.basechartId, {
       type: 'pie',
       data: {
-        labels: ["Capture","Defense"],
+        labels: ['Capture','Defense'],
         datasets: [{
-          backgroundColor: ["#c45850","#3cba9f"],
+          backgroundColor: ['#c45850','#3cba9f'],
           data: [capture_data, defense_data]
         }]
       },
