@@ -19,6 +19,8 @@ export class AppComponent {
   }
 
   loadData(name: string){
+    this.character = null;  // Ensures data will be reloaded if a new char is searched
+
     this._ps2ApiService.getCharacterId(name).subscribe(
       data =>{
 
@@ -34,7 +36,8 @@ export class AppComponent {
             this.character = new Character(data['character_id'],data['name']['first'],
             data['faction_id'],data['times']['minutes_played'],data['battle_rank'],
             data['certs'],stats['stat_history']['kills']['all_time'],stats['stat_history']['deaths']['all_time'],
-            stats['stat_history']['facility_capture']['all_time'],stats['stat_history']['facility_defend']['all_time']);
+            stats['stat_history']['facility_capture']['all_time'],stats['stat_history']['facility_defend']['all_time'],
+            data['times']['last_save_date'].split(' ')[0]);
 
             this.character.loadPlaytimeData(stats['stat'],stats['weapon_stat']);
 
@@ -49,7 +52,5 @@ export class AppComponent {
         );
       }
     );
-
-
   }
 }

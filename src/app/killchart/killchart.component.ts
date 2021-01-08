@@ -3,8 +3,7 @@ import { Chart } from 'node_modules/chart.js';
 
 @Component({
   selector: 'app-killchart',
-  templateUrl: './killchart.component.html',
-  styleUrls: ['./killchart.component.scss']
+  template: `<app-piechart *ngIf='data' [data]='data' [labels]='labels' [colors]='colors' [pieChartId]='chartId' [displayLegend]='displayLegend'></app-piechart>`
 })
 export class KillchartComponent implements OnInit {
   // kill_map can either be time/faction map or class kill map
@@ -12,47 +11,41 @@ export class KillchartComponent implements OnInit {
   @Input() kill_type: string;// var to determine how to label chart
   @Input() index: number;// Determines which data to get from map.
                         // 0 for all time, 1 for monthly, 2 for weekly, etc
-  @Input() killchartId: string;//Workaround to let me resuse component multiple times
-  @Input() displayOn: boolean = true;//boolean to turn legend on or off
+  @Input() chartId: string;//Workaround to let me resuse component multiple times
+
+  data = [];
+  labels = [];
+  colors = [];
+  displayLegend = true;
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
-  // Referenced https://tobiasahlin.com/blog/chartjs-charts-to-get-you-started/#2-line-chart
-  // https://www.chartjs.org/
+  // Referenced https://tobiasahlin.com/blog/chartjs-charts-to-get-you-started/#2-line-chart https://www.chartjs.org/
   // Used to display data related to kills
-  ngAfterViewInit(){
-    Chart.defaults.global.defaultFontColor = 'white';
-
-    let kill_data = [];//data to supply to chart
-    let labels = [];//labels for chart
-
-    // if overall view, display chart in terms of factions and get data
-    // from chosen time period (this.index)
+  ngOnInit(): void {
+    // If overall view, get data in terms of faction of enemy kill and from what time period (this.index)
     if(this.kill_type === 'overall'){
-      labels = ['VS','NC','TR'];
+      this.labels = ['VS','NC','TR'];
 
       if(this.index === 0){
-        kill_data = this.kill_map.get('all_time');
+        this.data = this.kill_map.get('all_time');
       }
       else if (this.index === 1){
-        kill_data = this.kill_map.get('monthly');
+        this.data = this.kill_map.get('monthly');
       }
       else if (this.index === 2){
-        kill_data = this.kill_map.get('weekly');
+        this.data = this.kill_map.get('weekly');
       }
       else{
-        kill_data = this.kill_map.get('daily');
+        this.data = this.kill_map.get('daily');
       }
     }
-    // if vehicle view, display in terms of vehicles and get vehicle data
+    // If vehicle view, get data in terms of vehicles
     else if(this.kill_type === 'vehicle'){
-      labels = ['Flash','Sunderer','Lightning','Magrider','Vanguard','Prowler',
+      this.labels = ['Flash','Sunderer','Lightning','Magrider','Vanguard','Prowler',
       'Scythe','Reaver','Mosquito','Liberator','Galaxy','Harraser','Valkyrie',
       'Ant','Colossus','Bastion','Javelin'];
-      kill_data = [
+      this.data = [
         this.kill_map.get('flash'),
         this.kill_map.get('sunderer'),
         this.kill_map.get('lightning'),
@@ -71,48 +64,37 @@ export class KillchartComponent implements OnInit {
         this.kill_map.get('bastion'),
         this.kill_map.get('javelin')];
     }
-    // if infantry view, display in terms of classes and get classes data
+    // If infantry view, get in terms of class kills were gotten with
     else{
-      kill_data = [0,0,0,0,0,0];
-      labels = ['Infiltrator', 'Light Assault', 'Medic','Engineer','Heavy Assault','Max'];
+      this.data = [0,0,0,0,0,0];
+      this.labels = ['Infiltrator', 'Light Assault', 'Medic','Engineer','Heavy Assault','Max'];
 
-      kill_data[0] += this.kill_map.get('infiltrator')
-      kill_data[1] += this.kill_map.get('light assault');
-      kill_data[2] += this.kill_map.get('medic');
-      kill_data[3] += this.kill_map.get('engineer');
-      kill_data[4] += this.kill_map.get('heavy assault');
-      kill_data[5] += this.kill_map.get('max');
+      this.data[0] += this.kill_map.get('infiltrator')
+      this.data[1] += this.kill_map.get('light assault');
+      this.data[2] += this.kill_map.get('medic');
+      this.data[3] += this.kill_map.get('engineer');
+      this.data[4] += this.kill_map.get('heavy assault');
+      this.data[5] += this.kill_map.get('max');
     }
 
-    var myChart = new Chart(this.killchartId, {
-      type: 'pie',
-      data: {
-        labels: labels,
-        datasets: [{
-          backgroundColor: [
-            'rgba(150, 0, 150, 0.8)',
-            'rgba(0, 0, 255, 0.8)',
-            'rgba(200, 0, 0, 0.8)',
-            'rgba(75, 100, 192, 0.8)',
-            'rgba(153, 102, 255, 0.8)',
-            'rgba(255, 159, 64, 0.8)',],
-          borderColor: [
-            'rgba(150, 0, 150, 1)',
-            'rgba(0, 0, 200, 1)',
-            'rgba(150, 0, 0, 1)',
-            'rgba(75, 100, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-          ],
-          data: kill_data
-        }]
-      },//end of data
-      options: {
-        legend: {
-          display: this.displayOn
-        }
-      }
-    });//end of new Chart
-  }// end of ngAfterViewInit
-
+    this.colors = [
+      'rgba(215, 86, 245, 0.8)',
+      'rgba(54, 162, 235, 0.8)',
+      'rgba(255, 99, 132, 0.8)',
+      'rgba(75, 100, 192, 0.8)',
+      'rgba(153, 102, 255, 0.8)',
+      'rgba(255, 159, 64, 0.8)',
+      'rgba(255, 255, 255, 0.8)',
+      'rgba(0, 0, 0, 0.8)',
+      'rgba(100, 100, 0, 0.8)',
+      'rgba(100, 0, 100, 0.8)',
+      'rgba(50, 50, 50, 0.8)',
+      'rgba(200, 200, 200, 0.8)',
+      'rgba(0, 0, 255, 0.8)',
+      'rgba(255, 0, 0, 0.8)',
+      'rgba(0, 255, 0, 0.8)',
+      'rgba(0, 50, 0, 0.8)',
+      'rgba(50, 0, 0, 0.8)'
+    ];
+  }
 }

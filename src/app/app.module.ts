@@ -11,26 +11,29 @@ import { ps2ApiService } from './services/ps2api.service';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { PlaytimechartComponent } from './playtimechart/playtimechart.component';
+import { PlaytimeComponent } from './playtime/playtime.component';
 import { KillchartComponent } from './killchart/killchart.component';
 import { DeathchartComponent } from './deathchart/deathchart.component';
 import { BasechartComponent } from './basechart/basechart.component';
 import { LinechartComponent } from './linechart/linechart.component';
 import { KdchartComponent } from './kdchart/kdchart.component';
+import { PiechartComponent } from './piechart/piechart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PlaytimechartComponent,
+    PlaytimeComponent,
     KillchartComponent,
     DeathchartComponent,
     BasechartComponent,
     LinechartComponent,
-    KdchartComponent
+    KdchartComponent,
+    PiechartComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { KdchartComponent } from './kdchart/kdchart.component';
     NoopAnimationsModule,
     MatCardModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatRadioModule,
     MatInputModule,
     FlexLayoutModule,

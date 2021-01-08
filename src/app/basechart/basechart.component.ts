@@ -27,7 +27,6 @@ export class BasechartComponent implements OnInit {
   // used to display capture/defense ratio
   ngAfterViewInit(){
     Chart.defaults.global.defaultFontColor = 'white';
-
     // converts playtime to array to pass to chart
     let capture_data = 0;
     let defense_data = 0;
@@ -45,11 +44,18 @@ export class BasechartComponent implements OnInit {
       period='daily';
     }
 
-    // Iterate through all elements of time frame array.
-    // Get sum from both captures and defenses to compare
-    for(let i=0;i<this.base_capture.get(period).length;i++){
-      capture_data += this.base_capture.get(period)[i];
-      defense_data += this.base_defense.get(period)[i];
+    // Get the current month
+    if(period == 'monthly'){
+      var date = new Date();
+      var month = date.getMonth();
+
+      capture_data += this.base_capture.get(period)[month];
+      defense_data += this.base_defense.get(period)[month];
+    }
+    // The last index of weekly/daily is the most recently saved data
+    else {
+      capture_data += this.base_capture.get(period)[this.base_capture.get(period).length-1];
+      defense_data += this.base_defense.get(period)[this.base_defense.get(period).length-1];
     }
 
     var myChart = new Chart(this.basechartId, {

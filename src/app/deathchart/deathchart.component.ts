@@ -3,8 +3,7 @@ import { Chart } from 'node_modules/chart.js';
 
 @Component({
   selector: 'app-deathchart',
-  templateUrl: './deathchart.component.html',
-  styleUrls: ['./deathchart.component.scss']
+  template: `<app-piechart *ngIf='data' [data]='data' [labels]='labels' [colors]='colors' [pieChartId]='chartId' [displayLegend]='displayLegend'></app-piechart>`
 })
 export class DeathchartComponent implements OnInit {
   // death_map can either be time/faction map or class death map
@@ -12,77 +11,58 @@ export class DeathchartComponent implements OnInit {
   @Input() death_type: string;// var to determine how to label chart
   @Input() index: number;// Determines which data to get from map.
                         // 0 for all time, 1 for monthly, 2 for weekly, etc
-  @Input() deathchartId: string;//Workaround to let me resuse component multiple times
+  @Input() chartId: string;//Workaround to let me resuse component multiple times
+
+  data = [];
+  labels = [];
+  colors = [];
+  displayLegend = true;
 
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  // Referenced https://tobiasahlin.com/blog/chartjs-charts-to-get-you-started/#2-line-chart
-  // https://www.chartjs.org/
-  // used to display deaths
-  ngAfterViewInit(){
-    Chart.defaults.global.defaultFontColor = 'white';
-
-    let death_data = [];//data to supply to graph
-    let labels = [];//label for graph
-
     // if general view,
     //  just show factions
     //  and get data according to chosen timeframe (this.index)
+    console.log("deathchart");
     if(this.death_type === 'overall'){
-      labels = ['VS','NC','TR'];
+      this.labels = ['VS','NC','TR'];
 
       if(this.index === 0){
-        death_data = this.death_map.get('all_time');
+        this.data = this.death_map.get('all_time');
       }
       else if (this.index === 1){
-        death_data = this.death_map.get('monthly');
+        this.data = this.death_map.get('monthly');
       }
       else if (this.index === 2){
-        death_data = this.death_map.get('weekly');
+        this.data = this.death_map.get('weekly');
       }
       else{
-        death_data = this.death_map.get('daily');
+        this.data = this.death_map.get('daily');
       }
+
+      console.log(this.data);
     }
     // Other wise display data in terms of classes
     else{
-      death_data = [0,0,0,0,0,0];
-      labels = ['Infiltrator', 'Light Assault', 'Medic','Engineer','Heavy Assault','Max'];
+      this.data = [0,0,0,0,0,0];
+      this.labels = ['Infiltrator', 'Light Assault', 'Medic','Engineer','Heavy Assault','Max'];
 
-      death_data[0] += this.death_map.get('infiltrator')
-      death_data[1] += this.death_map.get('light assault');
-      death_data[2] += this.death_map.get('medic');
-      death_data[3] += this.death_map.get('engineer');
-      death_data[4] += this.death_map.get('heavy assault');
-      death_data[5] += this.death_map.get('max');
+      this.data[0] += this.death_map.get('infiltrator')
+      this.data[1] += this.death_map.get('light assault');
+      this.data[2] += this.death_map.get('medic');
+      this.data[3] += this.death_map.get('engineer');
+      this.data[4] += this.death_map.get('heavy assault');
+      this.data[5] += this.death_map.get('max');
+
+      console.log(this.data);
     }
 
-    var myChart = new Chart(this.deathchartId, {
-      type: 'pie',
-      data: {
-        labels: labels,
-        datasets: [{
-          backgroundColor: [
-            'rgba(150, 0, 150, 0.8)',
-            'rgba(0, 0, 255, 0.8)',
-            'rgba(200, 0, 0, 0.8)',
-            'rgba(75, 100, 192, 0.8)',
-            'rgba(153, 102, 255, 0.8)',
-            'rgba(255, 159, 64, 0.8)',],
-          borderColor: [
-            'rgba(150, 0, 150, 1)',
-            'rgba(0, 0, 200, 1)',
-            'rgba(150, 0, 0, 1)',
-            'rgba(75, 100, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-          ],
-          data: death_data
-        }]
-      }//end of data
-    });//end of new Chart
-  }// end of ngAfterViewInit
+    this.colors = ['rgba(150, 0, 150, 0.8)',
+    'rgba(0, 0, 255, 0.8)',
+    'rgba(200, 0, 0, 0.8)',
+    'rgba(75, 100, 192, 0.8)',
+    'rgba(153, 102, 255, 0.8)',
+    'rgba(255, 159, 64, 0.8)'];
+  }
 }
