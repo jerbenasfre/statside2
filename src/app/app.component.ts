@@ -10,6 +10,7 @@ import { Character } from './data/character';
 export class AppComponent {
   title = 'Statside 2: A Planetside 2 Stat Tracker';
   character!: Character;
+  characters !: Array<Character>;
 
   constructor(private _ps2ApiService: ps2ApiService){
   }
@@ -33,11 +34,14 @@ export class AppComponent {
             data = data['single_character_by_id_list'][0];
             let stats = data['stats'];
 
+            // Instanstiates a character object with their id, name, faction, etc
             this.character = new Character(data['character_id'],data['name']['first'],
             data['faction_id'],data['times']['minutes_played'],data['battle_rank'],
             data['certs'],stats['stat_history']['kills']['all_time'],stats['stat_history']['deaths']['all_time'],
             stats['stat_history']['facility_capture']['all_time'],stats['stat_history']['facility_defend']['all_time'],
             data['times']['last_save_date'].split(' ')[0]);
+
+            // Add to character list
 
             this.character.loadPlaytimeData(stats['stat'],stats['weapon_stat']);
 

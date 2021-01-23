@@ -140,7 +140,7 @@
 </mat-card>
 -->
 <!--DATA RELATED TO KILLS & DEATHS-->
-<!--
+
 <mat-card class='card'>
   <mat-card-header>
     <mat-card-title class='card-title'>Kill/Death Statistics</mat-card-title>
@@ -149,19 +149,19 @@
     Shows your overall kills/deaths by time.
     <p>KD: All Time</p>
     <app-kdchart [kill_map]='this.character.kills' [death_map]='this.character.deaths'
-    [index]='0' [kdchartId]="'kdchart1'"></app-kdchart>
+    [index]='0' [chartId]="'kdchart1'"></app-kdchart>
     <p>KD: Monthly</p>
     <app-kdchart [kill_map]='this.character.kills' [death_map]='this.character.deaths'
-    [index]='1' [kdchartId]="'kdchart2'"></app-kdchart>
+    [index]='1' [chartId]="'kdchart2'"></app-kdchart>
     <p>KD: Weekly</p>
     <app-kdchart [kill_map]='this.character.kills' [death_map]='this.character.deaths'
-    [index]='2' [kdchartId]="'kdchart2'"></app-kdchart>
+    [index]='2' [chartId]="'kdchart3'"></app-kdchart>
     <p>KD: Daily</p>
     <app-kdchart [kill_map]='this.character.kills' [death_map]='this.character.deaths'
-    [index]='3' [kdchartId]="'kdchart3'"></app-kdchart>
+    [index]='3' [chartId]="'kdchart4'"></app-kdchart>
   </mat-card-content>
 </mat-card>
-
+<!--
 <mat-card class='card'>
   <mat-card-header>
     <mat-card-title class='card-title'>Overall Kill Statistics</mat-card-title>
@@ -205,7 +205,6 @@
     [chartId]="'killchart6'" [displayLegend]='false' [kill_type]="'vehicle'"></app-killchart>
   </mat-card-content>
 </mat-card>
--->
 
 <mat-card class='card'>
   <mat-card-header>
@@ -244,5 +243,7 @@
     [chartId]="'deathchart6'" [death_type]="'infantry'"></app-deathchart>
   </mat-card-content>
 </mat-card>
+
+-->
 </div>
 </div>

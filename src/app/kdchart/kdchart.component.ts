@@ -3,8 +3,8 @@ import { Chart } from 'node_modules/chart.js';
 
 @Component({
   selector: 'app-kdchart',
-  templateUrl: './kdchart.component.html',
-  styleUrls: ['./kdchart.component.scss']
+  template: `<app-piechart *ngIf='data; else elseBlock' [data]='data' [labels]='labels' [colors]='colors' [pieChartId]='chartId' [displayLegend]='displayLegend'></app-piechart>
+             <ng-template #elseBlock><p>No data available.</p></ng-template>`
 })
 export class KdchartComponent implements OnInit {
   // kill_map and death_map containing time frames for kills/deaths to compare with
@@ -12,16 +12,18 @@ export class KdchartComponent implements OnInit {
   @Input() death_map: Map<string, Array<number>>;
   @Input() index: number;// Determines which data to get from map.
                         // 0 for all time, 1 for monthly, 2 for weekly, etc
-  @Input() kdchartId: string;//Workaround to let me resuse component multiple times
+  @Input() chartId: string;//Workaround to let me resuse component multiple times
+
+  data = [];
+  labels = [];
+  colors = [];
+  displayLegend = true;
+  empty = false;
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
-  // Referenced https://tobiasahlin.com/blog/chartjs-charts-to-get-you-started/#2-line-chart
-  // https://www.chartjs.org/
   //used to display kills and deaths as a ratio
-  ngAfterViewInit(){
+  ngOnInit(): void {
     let kill_data = [];//var to store kill data
     let death_data = [];//var to store death data
 
@@ -51,20 +53,15 @@ export class KdchartComponent implements OnInit {
       sum_deaths += death_data[i];
     }
 
-    var myChart = new Chart(this.kdchartId, {
-      type: 'doughnut',
-      data: {
-        labels: ['Kills','Deaths'],
-        datasets: [{
-          backgroundColor: [
-            'rgba(250, 200, 200, 0.8)',
-            'rgba(200, 200, 250, 0.8)'],
-          borderColor: [
-            'rgba(250, 200, 200, 0.8)',
-            'rgba(200, 200, 250, 0.8)',],
-          data: [sum_kills,sum_deaths]
-        }]
-      }//end of data
-    });//end of new Chart
-  }// end of ngAfterViewInit
+    if (sum_kills == 0 || sum_deaths == 0)
+      this.data = null;
+
+    else{
+      this.data = [sum_kills,sum_deaths];
+      this.labels = ['Kills','Deaths'];
+      this.colors = [
+        'rgba(250, 200, 200, 0.8)',
+        'rgba(200, 200, 250, 0.8)'];
+    }
+  }
 }

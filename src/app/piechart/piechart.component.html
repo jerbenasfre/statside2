@@ -1,3 +1,4 @@
-<div *ngIf='pieChartId'>
+<div *ngIf='data; else elseBlock'>
   <canvas [id]='pieChartId'></canvas>
 </div>
+<ng-template #elseBlock><p>No data available.</p></ng-template>
