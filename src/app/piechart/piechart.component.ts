@@ -16,30 +16,47 @@ export class PiechartComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    // Check to see if data is empty. If so, set data to null so html displays
+    // "No Data"
+    let empty = true;
+    for(let i=0; i<this.data.length; ++i){
+      if(this.data[i] != 0){
+        empty = false;
+        break;
+      }
+    }
+
+    if(empty)
+      this.data = null;
+
+    console.log(this.data);
+  }
 
   ngAfterViewInit(){
-    Chart.defaults.global.defaultFontColor = 'white';
+    if(this.data != null){
+      Chart.defaults.global.defaultFontColor = 'white';
 
-    console.log("piechart");
-    console.log(this.data);
+      console.log("piechart");
+      console.log(this.data);
 
-    var myChart = new Chart(this.pieChartId, {
-      type: 'pie',
-      data: {
-          labels: this.labels,
-          datasets: [{
-              data: this.data,
-              backgroundColor: this.colors,
-              borderColor: this.colors,
-              borderWidth: 1
-          }]//end of datasets
-      },//end of data
-      options: {
-        legend: {
-          display: this.displayLegend
+      var myChart = new Chart(this.pieChartId, {
+        type: 'pie',
+        data: {
+            labels: this.labels,
+            datasets: [{
+                data: this.data,
+                backgroundColor: this.colors,
+                borderColor: this.colors,
+                borderWidth: 1
+              }]//end of datasets
+            },//end of data
+        options: {
+          legend: {
+              display: this.displayLegend
+          }
         }
-      }
-    });//end of new Chart
+      });//end of new Chart
+    }
   }
 }

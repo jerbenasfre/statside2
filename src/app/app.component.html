@@ -37,7 +37,6 @@
 </mat-card>
 
 <!--DATA RELATED TO PLAYTIME-->
-<!--
 <mat-card class='card'>
   <mat-card-header>
     <mat-card-title class='card-title'>Infantry Playtime Statistics</mat-card-title>
@@ -73,29 +72,30 @@
     data_type= 'vehicle' [displayOn]='false' [chartId]="'playtimechart4'"></app-playtime>
   </mat-card-content>
 </mat-card>
--->
+
 <!--DATA RELATED TO BASE CAPTURES AND DEFENSES-->
-<!--
+
 <mat-card class='card'>
   <mat-card-header>
     <mat-card-title class='card-title'>Base Captures/Defense Ratio</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     Shows the ratio of bases captured or defended.
+
     <p> Base Capture/Defense: Monthly</p>
     <app-basechart [base_capture]='this.character.facility_captures'
     [base_defense]='this.character.facility_defenses' [index]='0'
-    [basechartId]="'basechart1'"></app-basechart>
+    [chartId]="'basechart1'"></app-basechart>
 
     <p> Base Capture/Defense: Weekly</p>
     <app-basechart [base_capture]='this.character.facility_captures'
     [base_defense]='this.character.facility_defenses' [index]='1'
-    [basechartId]="'basechart2'"></app-basechart>
+    [chartId]="'basechart2'"></app-basechart>
 
     <p> Base Capture/Defense: Daily</p>
     <app-basechart [base_capture]='this.character.facility_captures'
     [base_defense]='this.character.facility_defenses' [index]='2'
-    [basechartId]="'basechart3'"></app-basechart>
+    [chartId]="'basechart3'"></app-basechart>
   </mat-card-content>
 </mat-card>
 
@@ -138,9 +138,8 @@
     [linechartId]="'linechart6'" label='# of Bases'></app-linechart>
   </mat-card-content>
 </mat-card>
--->
-<!--DATA RELATED TO KILLS & DEATHS-->
 
+<!--DATA RELATED TO KILLS & DEATHS-->
 <mat-card class='card'>
   <mat-card-header>
     <mat-card-title class='card-title'>Kill/Death Statistics</mat-card-title>
@@ -161,7 +160,7 @@
     [index]='3' [chartId]="'kdchart4'"></app-kdchart>
   </mat-card-content>
 </mat-card>
-<!--
+
 <mat-card class='card'>
   <mat-card-header>
     <mat-card-title class='card-title'>Overall Kill Statistics</mat-card-title>
@@ -243,7 +242,5 @@
     [chartId]="'deathchart6'" [death_type]="'infantry'"></app-deathchart>
   </mat-card-content>
 </mat-card>
-
--->
 </div>
 </div>

@@ -3,8 +3,7 @@ import { Chart } from 'node_modules/chart.js';
 
 @Component({
   selector: 'app-kdchart',
-  template: `<app-piechart *ngIf='data; else elseBlock' [data]='data' [labels]='labels' [colors]='colors' [pieChartId]='chartId' [displayLegend]='displayLegend'></app-piechart>
-             <ng-template #elseBlock><p>No data available.</p></ng-template>`
+  template: `<app-piechart *ngIf='data' [data]='data' [labels]='labels' [colors]='colors' [pieChartId]='chartId' [displayLegend]='displayLegend'></app-piechart>`
 })
 export class KdchartComponent implements OnInit {
   // kill_map and death_map containing time frames for kills/deaths to compare with
@@ -18,7 +17,6 @@ export class KdchartComponent implements OnInit {
   labels = [];
   colors = [];
   displayLegend = true;
-  empty = false;
 
   constructor() { }
 
@@ -53,15 +51,10 @@ export class KdchartComponent implements OnInit {
       sum_deaths += death_data[i];
     }
 
-    if (sum_kills == 0 || sum_deaths == 0)
-      this.data = null;
-
-    else{
-      this.data = [sum_kills,sum_deaths];
-      this.labels = ['Kills','Deaths'];
-      this.colors = [
-        'rgba(250, 200, 200, 0.8)',
-        'rgba(200, 200, 250, 0.8)'];
-    }
+    this.data = [sum_kills,sum_deaths];
+    this.labels = ['Kills','Deaths'];
+    this.colors = [
+        'rgba(250, 150, 100, 0.8)',
+        'rgba(100, 150, 250, 0.8)'];
   }
 }

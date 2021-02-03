@@ -3,8 +3,7 @@ import { Chart } from 'node_modules/chart.js';
 
 @Component({
   selector: 'app-basechart',
-  templateUrl: './basechart.component.html',
-  styleUrls: ['./basechart.component.scss']
+  template: `<app-piechart *ngIf='data' [data]='data' [labels]='labels' [colors]='colors' [pieChartId]='chartId' [displayLegend]='displayLegend'></app-piechart>`
 })
 export class BasechartComponent implements OnInit {
   // Base capture and base defense data.
@@ -15,17 +14,17 @@ export class BasechartComponent implements OnInit {
 
   @Input() index: number;// Determines which data to get from map.
                         // 0 for all time, 1 for monthly, 2 for weekly, etc
-  @Input() basechartId: string;//Workaround to let me resuse component multiple times
+  @Input() chartId: string;//Workaround to let me resuse component multiple times
+
+  data = [];
+  labels = [];
+  colors = [];
+  displayLegend = true;
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
-  // Referenced https://tobiasahlin.com/blog/chartjs-charts-to-get-you-started/#2-line-chart
-  // https://www.chartjs.org/
   // used to display capture/defense ratio
-  ngAfterViewInit(){
+  ngOnInit(): void {
     Chart.defaults.global.defaultFontColor = 'white';
     // converts playtime to array to pass to chart
     let capture_data = 0;
@@ -58,15 +57,8 @@ export class BasechartComponent implements OnInit {
       defense_data += this.base_defense.get(period)[this.base_defense.get(period).length-1];
     }
 
-    var myChart = new Chart(this.basechartId, {
-      type: 'pie',
-      data: {
-        labels: ['Capture','Defense'],
-        datasets: [{
-          backgroundColor: ['#c45850','#3cba9f'],
-          data: [capture_data, defense_data]
-        }]
-      },
-    });//end of new Chart
-  }// end of ngAfterViewInit
+    this.data = [capture_data, defense_data];
+    this.labels = ['Capture','Defense'];
+    this.colors = ['#c45850','#3cba9f'];
+  }
 }
