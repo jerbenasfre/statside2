@@ -8,7 +8,6 @@ import { Chart } from 'node_modules/chart.js';
 export class BasechartComponent implements OnInit {
   // Base capture and base defense data.
   // value are Array<number>
-  // 12 indices for month, 13 for week, and 31 for day
   @Input() base_capture: Map<string, Array<number>>;
   @Input() base_defense: Map<string, Array<number>>;
 
@@ -26,7 +25,6 @@ export class BasechartComponent implements OnInit {
   // used to display capture/defense ratio
   ngOnInit(): void {
     Chart.defaults.global.defaultFontColor = 'white';
-    // converts playtime to array to pass to chart
     let capture_data = 0;
     let defense_data = 0;
 

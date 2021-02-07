@@ -8,13 +8,40 @@ import { Chart } from 'node_modules/chart.js';
 })
 export class PiechartComponent implements OnInit {
 
-  @Input() data: Array<any>;
+  @Input() data: Array<any> = null;
+  @Input() updated: boolean = false;
   @Input() labels: Array<any>;
   @Input() colors: Array<any>;
   @Input() pieChartId: number; // Workaround to allow me to resuse chart components
   @Input() displayLegend: boolean = false;
 
+  myChart: Chart;
+
   constructor() { }
+
+  ngOnChanges(changes){
+    // First change is the initialization of graph. Subsequent changes are
+    // updates to graph.
+    if(changes['data'].firstChange != true){
+      this.myChart = new Chart(this.pieChartId, {
+        type: 'pie',
+        data: {
+            labels: this.labels,
+            datasets: [{
+                data: this.data,
+                backgroundColor: this.colors,
+                borderColor: this.colors,
+                borderWidth: 1
+              }]//end of datasets
+            },//end of data
+        options: {
+          legend: {
+              display: this.displayLegend
+          }
+        }
+      });//end of new Chart
+    }
+  }
 
   ngOnInit(): void {
     // Check to see if data is empty. If so, set data to null so html displays
@@ -29,18 +56,13 @@ export class PiechartComponent implements OnInit {
 
     if(empty)
       this.data = null;
-
-    console.log(this.data);
   }
 
   ngAfterViewInit(){
     if(this.data != null){
       Chart.defaults.global.defaultFontColor = 'white';
 
-      console.log("piechart");
-      console.log(this.data);
-
-      var myChart = new Chart(this.pieChartId, {
+      this.myChart = new Chart(this.pieChartId, {
         type: 'pie',
         data: {
             labels: this.labels,

@@ -25,7 +25,6 @@ export class LinechartComponent implements OnInit {
   // Referenced https://tobiasahlin.com/blog/chartjs-charts-to-get-you-started/#2-line-chart
   // https://www.chartjs.org/
 
-  // Used to display the data for base captures/defenses
   ngAfterViewInit(){
     Chart.defaults.global.defaultFontColor = 'white';
 

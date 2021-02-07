@@ -11,6 +11,7 @@ export class AppComponent {
   title = 'Statside 2: A Planetside 2 Stat Tracker';
   character!: Character;
   characters !: Array<Character>;
+  error: boolean;
 
   constructor(private _ps2ApiService: ps2ApiService){
   }
@@ -20,17 +21,27 @@ export class AppComponent {
   }
 
   loadData(name: string){
+
+    if (name.trim() === ''){
+      this.error = true;
+      return;
+    }
+    else
+      this.error = false;
+
     this.character = null;  // Ensures data will be reloaded if a new char is searched
 
     this._ps2ApiService.getCharacterId(name).subscribe(
       data =>{
 
+        // If no results, leave character as null
+        if (data.length == 0)
+          return;
+
         let character_id = data['character_list'][0]['character_id'];
 
         this._ps2ApiService.getCharacter(character_id).subscribe(
           data =>{
-            console.log(data);
-
             data = data['single_character_by_id_list'][0];
             let stats = data['stats'];
 

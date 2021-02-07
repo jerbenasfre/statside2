@@ -443,7 +443,7 @@ export class Character {
       this.deaths.get('daily')[2] += killer_data[i]['value_daily_tr']/1;
     }
 
-    console.log(this.deaths);
+    //console.log(this.deaths);
 
     // Load deaths by class of killer
     this.killed_by_infantry.set('infiltrator', killer_data[8]['value_forever_vs']/1 + killer_data[8]['value_forever_nc']/1 + killer_data[8]['value_forever_tr']/1);
@@ -453,7 +453,7 @@ export class Character {
     this.killed_by_infantry.set('heavy assault', killer_data[12]['value_forever_vs']/1 + killer_data[12]['value_forever_nc']/1 + killer_data[12]['value_forever_tr']/1);
     this.killed_by_infantry.set('max', killer_data[13]['value_forever_vs']/1 + killer_data[13]['value_forever_nc']/1 + killer_data[13]['value_forever_tr']/1);
 
-    console.log(this.killed_by_infantry);
+    //console.log(this.killed_by_infantry);
 
     // Load deaths by class player died as
     this.class_deaths.set('infiltrator', death_data[33]['value_forever']/1 );
@@ -463,7 +463,7 @@ export class Character {
     this.class_deaths.set('heavy assault', death_data[37]['value_forever']/1);
     this.class_deaths.set('max', death_data[38]['value_forever']/1);
 
-    console.log(this.class_deaths);
+    //console.log(this.class_deaths);
   }// end of load death data
 
   // Loads in base captures/defenses.

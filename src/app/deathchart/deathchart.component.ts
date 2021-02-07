@@ -24,7 +24,6 @@ export class DeathchartComponent implements OnInit {
     // if general view,
     //  just show factions
     //  and get data according to chosen timeframe (this.index)
-    console.log("deathchart");
     if(this.death_type === 'overall'){
       this.labels = ['VS','NC','TR'];
 
@@ -40,8 +39,6 @@ export class DeathchartComponent implements OnInit {
       else{
         this.data = this.death_map.get('daily');
       }
-
-      console.log(this.data);
     }
     // Other wise display data in terms of classes
     else{
@@ -54,8 +51,6 @@ export class DeathchartComponent implements OnInit {
       this.data[3] += this.death_map.get('engineer');
       this.data[4] += this.death_map.get('heavy assault');
       this.data[5] += this.death_map.get('max');
-
-      console.log(this.data);
     }
 
     this.colors = ['rgba(150, 0, 150, 0.8)',

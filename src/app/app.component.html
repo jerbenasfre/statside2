@@ -1,11 +1,15 @@
 <!--https://tburleson-layouts-demos.firebaseapp.com/#/docs-->
 <div fxLayout='column' fxLayoutAlign='space-between center'>
-<form class='form-style'>
+  <form class='form-style'>
   <mat-form-field class='input-style'>
     <mat-label>Enter Player Name</mat-label>
       <input matInput #box (keyup.enter)='loadData(box.value)'>
   </mat-form-field>
 </form>
+
+<div *ngIf='error'>
+Search Error. Please double check spelling of name.
+</div>
 
 <div id="container" *ngIf='character'>
 <!--https://material.angular.io/components/-->
@@ -32,9 +36,10 @@
     Current Certs: {{character.certs}}
     <br>Total Certs Earned: {{character.total_certs}}
     Progress to next cert payout ({{character.certs_progress}}%)
-    <mat-progress-bar mode='determinate' value='{{character.br_progress}}'></mat-progress-bar>
+    <mat-progress-bar mode='determinate' value='{{character.certs_progress}}'></mat-progress-bar>
   </mat-card-content>
 </mat-card>
+
 
 <!--DATA RELATED TO PLAYTIME-->
 <mat-card class='card'>
@@ -43,21 +48,9 @@
   </mat-card-header>
   <mat-card-content>
     Shows how long you have played as X class.
-    <p> Class Playtime (Hrs): All Time</p>
+
     <app-playtime [playtime]='this.character.class_playtime' [index]='0'
     data_type= 'infantry' [chartId]="'playtimechart0'"></app-playtime>
-
-    <p> Class Playtime (Hrs): Monthly</p>
-    <app-playtime [playtime]='this.character.class_playtime' [index]='1'
-    data_type= 'infantry' [chartId]="'playtimechart1'"></app-playtime>
-
-    <p> Class Playtime (Hrs): Weekly</p>
-    <app-playtime [playtime]='this.character.class_playtime' [index]='2'
-    data_type= 'infantry' [chartId]="'playtimechart2'"></app-playtime>
-
-    <p> Class Playtime (Hrs): Daily</p>
-    <app-playtime [playtime]='this.character.class_playtime' [index]='3'
-    data_type= 'infantry' [chartId]="'playtimechart3'"></app-playtime>
   </mat-card-content>
 </mat-card>
 
@@ -66,15 +59,15 @@
     <mat-card-title class='card-title'>Vehicle Playtime Statistics</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    Shows how long you have played in X vehicle.
+    Shows how long you have played in X vehicle. API only supports total time.
     <p> Vehicle Playtime (Hrs): All Time</p>
-    <app-playtime [playtime]='this.character.vehicle_playtime' [index]='0'
-    data_type= 'vehicle' [displayOn]='false' [chartId]="'playtimechart4'"></app-playtime>
+    <app-playtime [playtime]='this.character.vehicle_playtime'
+    data_type= 'vehicle' [displayOn]='false' [chartId]="'playtimechart1'"></app-playtime>
   </mat-card-content>
 </mat-card>
 
-<!--DATA RELATED TO BASE CAPTURES AND DEFENSES-->
 
+<!--DATA RELATED TO BASE CAPTURES AND DEFENSES-->
 <mat-card class='card'>
   <mat-card-header>
     <mat-card-title class='card-title'>Base Captures/Defense Ratio</mat-card-title>
@@ -138,6 +131,7 @@
     [linechartId]="'linechart6'" label='# of Bases'></app-linechart>
   </mat-card-content>
 </mat-card>
+
 
 <!--DATA RELATED TO KILLS & DEATHS-->
 <mat-card class='card'>

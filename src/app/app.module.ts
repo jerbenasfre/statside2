@@ -14,6 +14,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PlaytimeComponent } from './playtime/playtime.component';
@@ -45,6 +46,7 @@ import { PiechartComponent } from './piechart/piechart.component';
     MatProgressSpinnerModule,
     MatRadioModule,
     MatInputModule,
+    MatTabsModule,
     FlexLayoutModule,
     FormsModule
   ],
