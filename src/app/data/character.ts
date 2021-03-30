@@ -63,12 +63,12 @@ export class Character {
     this.total_captures = captures;
     this.total_defenses = defenses;
 
-    this.br = br['value'];
-    this.br_progress = br['percent_to_next'];
+    this.br = parseFloat(br['value']);
+    this.br_progress = parseFloat(br['percent_to_next']);
 
     this.total_certs = certs['earned_points'];
-    this.certs = certs['available_points'];
-    this.certs_progress = certs['percent_to_next'];
+    this.certs = parseFloat(certs['available_points']);
+    this.certs_progress = parseFloat(certs['percent_to_next']);
 
     // Initialize playtime map
     this.class_playtime = new Map([
@@ -82,14 +82,14 @@ export class Character {
 
     // Initialize kill and deaths map
     this.kills = new Map([
-      ['all_time', [0,0,0]],
+      ['all time', [0,0,0]],
       ['monthly', [0,0,0]],
       ['weekly', [0,0,0]],
       ['daily', [0,0,0]]
     ]);
 
     this.deaths = new Map([
-      ['all_time', [0,0,0]],
+      ['all time', [0,0,0]],
       ['monthly', [0,0,0]],
       ['weekly', [0,0,0]],
       ['daily', [0,0,0]]
@@ -118,7 +118,7 @@ export class Character {
       ['max', 0]
     ]);
 
-    // Array indices represent total deaths all_time, monthly, weekly, and daily
+    // Array indices represent total deaths all time, monthly, weekly, and daily
     this.class_deaths = new Map([
       ['infiltrator', 0],
       ['light assault', 0],
@@ -190,7 +190,7 @@ export class Character {
   // Loads data related to class playtime and vehicle time.
   //
   // Maps infantry class to an array representing:
-  //  all_time
+  //  all time
   //  monthly
   //  weekly
   //  daily
@@ -202,35 +202,35 @@ export class Character {
   // data2: json for vehicle data
   loadPlaytimeData(data, data2){
     // Load all time data. Convert time to hrs
-    this.class_playtime.get('infiltrator')[0] += data[4]['value_forever']/3600;
-    this.class_playtime.get('light assault')[0] += data[5]['value_forever']/3600;
-    this.class_playtime.get('medic')[0] += data[6]['value_forever']/3600;
-    this.class_playtime.get('engineer')[0] += data[7]['value_forever']/3600;
-    this.class_playtime.get('heavy assault')[0] += data[8]['value_forever']/3600;
-    this.class_playtime.get('max')[0] += data[9]['value_forever']/3600;
+    this.class_playtime.get('infiltrator')[0] += Math.floor(data[4]['value_forever']/3600);
+    this.class_playtime.get('light assault')[0] += Math.floor(data[5]['value_forever']/3600);
+    this.class_playtime.get('medic')[0] += Math.floor(data[6]['value_forever']/3600);
+    this.class_playtime.get('engineer')[0] += Math.floor(data[7]['value_forever']/3600);
+    this.class_playtime.get('heavy assault')[0] += Math.floor(data[8]['value_forever']/3600);
+    this.class_playtime.get('max')[0] += Math.floor(data[9]['value_forever']/3600);
 
     // Load Monthly data. Convert time to hrs
-    this.class_playtime.get('infiltrator')[1] += data[4]['value_monthly']/3600;
-    this.class_playtime.get('light assault')[1] += data[5]['value_monthly']/3600;
-    this.class_playtime.get('medic')[1] += data[6]['value_monthly']/3600;
-    this.class_playtime.get('engineer')[1] += data[7]['value_monthly']/3600;
-    this.class_playtime.get('heavy assault')[1] += data[8]['value_monthly']/3600;
-    this.class_playtime.get('max')[1] += data[9]['value_monthly']/3600;
+    this.class_playtime.get('infiltrator')[1] += Math.floor(data[4]['value_monthly']/3600);
+    this.class_playtime.get('light assault')[1] += Math.floor(data[5]['value_monthly']/3600);
+    this.class_playtime.get('medic')[1] += Math.floor(data[6]['value_monthly']/3600);
+    this.class_playtime.get('engineer')[1] += Math.floor(data[7]['value_monthly']/3600);
+    this.class_playtime.get('heavy assault')[1] += Math.floor(data[8]['value_monthly']/3600);
+    this.class_playtime.get('max')[1] += Math.floor(data[9]['value_monthly']/3600);
 
     // Load weekly data. Convert time to hrs
-    this.class_playtime.get('light assault')[2] += data[5]['value_weekly']/3600;
-    this.class_playtime.get('medic')[2] += data[6]['value_weekly']/3600;
-    this.class_playtime.get('engineer')[2] += data[7]['value_weekly']/3600;
-    this.class_playtime.get('heavy assault')[2] += data[8]['value_weekly']/3600;
-    this.class_playtime.get('max')[2] += data[9]['value_weekly']/3600;
+    this.class_playtime.get('light assault')[2] += Math.floor(data[5]['value_weekly']/3600);
+    this.class_playtime.get('medic')[2] += Math.floor(data[6]['value_weekly']/3600);
+    this.class_playtime.get('engineer')[2] += Math.floor(data[7]['value_weekly']/3600);
+    this.class_playtime.get('heavy assault')[2] += Math.floor(data[8]['value_weekly']/3600);
+    this.class_playtime.get('max')[2] += Math.floor(data[9]['value_weekly']/3600);
 
     // Load daily data. Convert time to hrs
-    this.class_playtime.get('infiltrator')[3] += data[4]['value_daily']/3600;
-    this.class_playtime.get('light assault')[3] += data[5]['value_daily']/3600;
-    this.class_playtime.get('medic')[3] += data[6]['value_daily']/3600;
-    this.class_playtime.get('engineer')[3] += data[7]['value_daily']/3600;
-    this.class_playtime.get('heavy assault')[3] += data[8]['value_daily']/3600;
-    this.class_playtime.get('max')[3] += data[9]['value_daily']/3600;
+    this.class_playtime.get('infiltrator')[3] += Math.floor(data[4]['value_daily']/3600);
+    this.class_playtime.get('light assault')[3] += Math.floor(data[5]['value_daily']/3600);
+    this.class_playtime.get('medic')[3] += Math.floor(data[6]['value_daily']/3600);
+    this.class_playtime.get('engineer')[3] += Math.floor(data[7]['value_daily']/3600);
+    this.class_playtime.get('heavy assault')[3] += Math.floor(data[8]['value_daily']/3600);
+    this.class_playtime.get('max')[3] += Math.floor(data[9]['value_daily']/3600);
 
     // Load vehicle playtime
     for(let i=0;i<data2.length;++i){
@@ -238,64 +238,83 @@ export class Character {
       // If data is play time, and is vehicle (id not 0) add time to vehicle key
       if(data2[i]['stat_name'] === 'weapon_play_time' && vehicle_id != '0'){
           if (vehicle_id === '1')
-            this.vehicle_playtime.set('flash',this.vehicle_playtime.get('flash')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('flash',
+            Math.floor(this.vehicle_playtime.get('flash')+data2[i]['value']/3600));
 
           if (vehicle_id === '2')
-            this.vehicle_playtime.set('sunderer',this.vehicle_playtime.get('sunderer')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('sunderer',
+            Math.floor(this.vehicle_playtime.get('sunderer')+data2[i]['value']/3600));
 
           if (vehicle_id === '3')
-            this.vehicle_playtime.set('lightning',this.vehicle_playtime.get('lightning')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('lightning',
+            Math.floor(this.vehicle_playtime.get('lightning')+data2[i]['value']/3600));
 
           if (vehicle_id === '4')
-            this.vehicle_playtime.set('magrider',this.vehicle_playtime.get('magrider')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('magrider',
+            Math.floor(this.vehicle_playtime.get('magrider')+data2[i]['value']/3600));
 
           if (vehicle_id === '5')
-            this.vehicle_playtime.set('vanguard',this.vehicle_playtime.get('vanguard')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('vanguard',
+            Math.floor(this.vehicle_playtime.get('vanguard')+data2[i]['value']/3600));
 
           if (vehicle_id === '6')
-            this.vehicle_playtime.set('prowler',this.vehicle_playtime.get('prowler')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('prowler',
+            Math.floor(this.vehicle_playtime.get('prowler')+data2[i]['value']/3600));
 
           if (vehicle_id === '7')
-            this.vehicle_playtime.set('scythe',this.vehicle_playtime.get('scythe')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('scythe',
+            Math.floor(this.vehicle_playtime.get('scythe')+data2[i]['value']/3600));
 
           if (vehicle_id === '8')
-            this.vehicle_playtime.set('reaver',this.vehicle_playtime.get('reaver')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('reaver',
+            Math.floor(this.vehicle_playtime.get('reaver')+data2[i]['value']/3600));
 
           if (vehicle_id === '9')
-          this.vehicle_playtime.set('mosquito',this.vehicle_playtime.get('mosquito')+data2[i]['value']/3600);
+          this.vehicle_playtime.set('mosquito',
+          Math.floor(this.vehicle_playtime.get('mosquito')+data2[i]['value']/3600));
 
           if (vehicle_id === '10')
-            this.vehicle_playtime.set('liberator',this.vehicle_playtime.get('liberator')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('liberator',
+            Math.floor(this.vehicle_playtime.get('liberator')+data2[i]['value']/3600));
 
           if (vehicle_id === '11')
-            this.vehicle_playtime.set('galaxy',this.vehicle_playtime.get('galaxy')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('galaxy',
+            Math.floor(this.vehicle_playtime.get('galaxy')+data2[i]['value']/3600));
 
           if (vehicle_id === '12')
-            this.vehicle_playtime.set('harasser',this.vehicle_playtime.get('harasser')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('harasser',
+            Math.floor(this.vehicle_playtime.get('harasser')+data2[i]['value']/3600));
 
           if (vehicle_id === '14')
-            this.vehicle_playtime.set('valkyrie',this.vehicle_playtime.get('valkyrie')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('valkyrie',
+            Math.floor(this.vehicle_playtime.get('valkyrie')+data2[i]['value']/3600));
 
           if (vehicle_id === '15')
-            this.vehicle_playtime.set('ant',this.vehicle_playtime.get('ant')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('ant',
+            Math.floor(this.vehicle_playtime.get('ant')+data2[i]['value']/3600));
 
           if (vehicle_id === '2007')
-            this.vehicle_playtime.set('colossus',this.vehicle_playtime.get('colossus')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('colossus',
+            Math.floor(this.vehicle_playtime.get('colossus')+data2[i]['value']/3600));
 
           if (vehicle_id === '2010')
-            this.vehicle_playtime.set('flash',this.vehicle_playtime.get('flash')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('flash',
+            Math.floor(this.vehicle_playtime.get('flash')+data2[i]['value']/3600));
 
           if (vehicle_id === '2019')
             this.vehicle_playtime.set('bastion',this.vehicle_playtime.get('bastion')+data2[i]['value']/3600);
 
           if (vehicle_id === '2030')
-            this.vehicle_playtime.set('javelin',this.vehicle_playtime.get('javelin')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('javelin',
+            Math.floor(this.vehicle_playtime.get('javelin')+data2[i]['value']/3600));
 
           if (vehicle_id === '2125')
-            this.vehicle_playtime.set('javelin',this.vehicle_playtime.get('javelin')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('javelin',
+            Math.floor(this.vehicle_playtime.get('javelin')+data2[i]['value']/3600));
 
           if (vehicle_id === '2129')
-            this.vehicle_playtime.set('javelin',this.vehicle_playtime.get('javelin')+data2[i]['value']/3600);
+            this.vehicle_playtime.set('javelin',
+            Math.floor(this.vehicle_playtime.get('javelin')+data2[i]['value']/3600));
         }// end of if
     }// end of for
   }//end of loadPlaytimeData
@@ -309,9 +328,9 @@ export class Character {
   loadKillsData(data){
     // Load kills by time and faction. Divided by 1 to convert str to int
     let kills = data[16];
-    this.kills.get('all_time')[0] = kills['value_forever_vs']/1;
-    this.kills.get('all_time')[1] = kills['value_forever_nc']/1;
-    this.kills.get('all_time')[2] = kills['value_forever_tr']/1;
+    this.kills.get('all time')[0] = kills['value_forever_vs']/1;
+    this.kills.get('all time')[1] = kills['value_forever_nc']/1;
+    this.kills.get('all time')[2] = kills['value_forever_tr']/1;
 
     this.kills.get('monthly')[0] = kills['value_monthly_vs']/1;
     this.kills.get('monthly')[1] = kills['value_monthly_nc']/1;
@@ -426,9 +445,9 @@ export class Character {
     // iterate through indices containing enemy class
     for(let i=8; i<14;++i){
       // Load deaths by time and faction. Divided by 1 to convert string to int
-      this.deaths.get('all_time')[0] += killer_data[i]['value_forever_vs']/1;
-      this.deaths.get('all_time')[1] += killer_data[i]['value_forever_nc']/1;
-      this.deaths.get('all_time')[2] += killer_data[i]['value_forever_tr']/1;
+      this.deaths.get('all time')[0] += killer_data[i]['value_forever_vs']/1;
+      this.deaths.get('all time')[1] += killer_data[i]['value_forever_nc']/1;
+      this.deaths.get('all time')[2] += killer_data[i]['value_forever_tr']/1;
 
       this.deaths.get('monthly')[0] += killer_data[i]['value_monthly_vs']/1;
       this.deaths.get('monthly')[1] += killer_data[i]['value_monthly_nc']/1;

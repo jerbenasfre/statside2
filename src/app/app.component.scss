@@ -1,10 +1,10 @@
 .form-style {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-  background-color: #057589CC;
   border: 3px solid #4CD8E0;
   border-radius: 3px;
+}
+
+mat-label {
+  color: white;
 }
 
 .input-style {
@@ -12,6 +12,7 @@
   max-width: 500px;
   width: 100%;
   background-color: #057589CC;
+  color: white;
 }
 
 .card {
@@ -35,6 +36,12 @@
 p {
   font-size: 18px;
   line-height: 1.3;
+  color: white;
+}
+
+h1 {
+  color: white;
+  font-size: 30px;
 }
 
 .test {
@@ -46,3 +53,24 @@ p {
   center space-around;
   align-items: center;
 }
+
+#loading{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
