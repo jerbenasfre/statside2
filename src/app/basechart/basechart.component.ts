@@ -34,8 +34,8 @@ export class BasechartComponent implements OnInit {
   colors = [];
   displayLegend = true;
 
-  timeSelected: string = 'monthly';
-  times: string[] = ['monthly', 'weekly', 'daily'];
+  timeSelected: string = 'year';
+  times: string[] = ['year', 'monthly', 'weekly', 'daily'];
 
   constructor() { }
 
@@ -44,12 +44,15 @@ export class BasechartComponent implements OnInit {
     let capture_data = 0;
     let defense_data = 0;
 
-    if(this.timeSelected == 'monthly'){
-      var date = new Date();
-      var month = date.getMonth();
-
-      capture_data += this.base_capture.get('monthly')[month];
-      defense_data += this.base_defense.get('monthly')[month];
+    if (this.timeSelected == 'year'){
+      for(let i=0; i<this.base_capture.get('monthly').length; ++i){
+        capture_data += this.base_capture.get('monthly')[i];
+        defense_data += this.base_defense.get('monthly')[i];
+      }
+    }
+    else if(this.timeSelected == 'monthly'){
+      capture_data += this.base_capture.get('monthly')[0];
+      defense_data += this.base_defense.get('monthly')[0];
     }
     // The last index of weekly/daily is the most recently saved data
     else {
@@ -70,12 +73,15 @@ export class BasechartComponent implements OnInit {
     let capture_data = 0;
     let defense_data = 0;
 
-    if(this.timeSelected == 'monthly'){
-      var date = new Date();
-      var month = date.getMonth();
-
-      capture_data += this.base_capture.get('monthly')[month];
-      defense_data += this.base_defense.get('monthly')[month];
+    if (this.timeSelected == 'year'){
+      for(let i=0; i<this.base_capture.get('monthly').length; ++i){
+        capture_data += this.base_capture.get('monthly')[i];
+        defense_data += this.base_defense.get('monthly')[i];
+      }
+    }
+    else if(this.timeSelected == 'monthly'){
+      capture_data += this.base_capture.get('monthly')[0];
+      defense_data += this.base_defense.get('monthly')[0];
     }
     // The last index of weekly/daily is the most recently saved data
     else {
@@ -86,7 +92,5 @@ export class BasechartComponent implements OnInit {
     }
 
     this.data = [capture_data, defense_data];
-    this.labels = ['Capture','Defense'];
-    this.colors = ['#c45850','#3cba9f'];
   }
 }
