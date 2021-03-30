@@ -11,13 +11,13 @@ export class ps2ApiService {
 
   getCharacterId(name: string): Observable<any>{
     let param1 = new HttpParams().set('name.first_lower',name.toLowerCase());
-    return this.httpclient.get("http://census.daybreakgames.com/get/ps2:v2/character",{
+    return this.httpclient.get("https://census.daybreakgames.com/get/ps2:v2/character",{
       params:param1
     });
   }
   getCharacter(char_id: string): Observable<any>{
     let param1 = new HttpParams().set('character_id',char_id);
-    return this.httpclient.get("http://census.daybreakgames.com/get/ps2:v2/single_character_by_id",{
+    return this.httpclient.get("https://census.daybreakgames.com/get/ps2:v2/single_character_by_id",{
       params:param1
     });
   }
