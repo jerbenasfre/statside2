@@ -44,8 +44,6 @@ export class DeathchartComponent implements OnInit {
     if(this.death_type == 'overall'){
       this.labels = ['VS','NC','TR'];
       this.data = this.death_map.get('all time');
-
-      console.log(this.data)
     }
     // Other wise display data in terms of classes
     else{
@@ -69,7 +67,6 @@ export class DeathchartComponent implements OnInit {
   }
 
   radioChange(event){
-    console.log(event.value)
     if (event.value == 'all time')
       this.data = this.death_map.get('all time');
     if (event.value == 'monthly')
