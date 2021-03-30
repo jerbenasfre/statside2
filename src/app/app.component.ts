@@ -39,12 +39,19 @@ export class AppComponent {
         // Check if server is down
         if (data['error']){
           this.error = 'Error when requesting data from Planetside 2 API server.'
+          this.loading = false;
           return;
         }
 
         // If no results, leave character as null
         if (data.length == 0){
           this.error = 'No results found for character: ' + name;
+          this.loading = false;
+          return;
+        }
+        else if (data['returned'] === 0){
+          this.error = 'No results found for character: ' + name;
+          this.loading = false;
           return;
         }
 

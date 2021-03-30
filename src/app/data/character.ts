@@ -201,36 +201,15 @@ export class Character {
   // data: json for infantry data
   // data2: json for vehicle data
   loadPlaytimeData(data, data2){
-    // Load all time data. Convert time to hrs
-    this.class_playtime.get('infiltrator')[0] += Math.floor(data[4]['value_forever']/3600);
-    this.class_playtime.get('light assault')[0] += Math.floor(data[5]['value_forever']/3600);
-    this.class_playtime.get('medic')[0] += Math.floor(data[6]['value_forever']/3600);
-    this.class_playtime.get('engineer')[0] += Math.floor(data[7]['value_forever']/3600);
-    this.class_playtime.get('heavy assault')[0] += Math.floor(data[8]['value_forever']/3600);
-    this.class_playtime.get('max')[0] += Math.floor(data[9]['value_forever']/3600);
+    let classes = ['infiltrator', 'light assault', 'medic', 'engineer', 'heavy assault', 'max']
 
-    // Load Monthly data. Convert time to hrs
-    this.class_playtime.get('infiltrator')[1] += Math.floor(data[4]['value_monthly']/3600);
-    this.class_playtime.get('light assault')[1] += Math.floor(data[5]['value_monthly']/3600);
-    this.class_playtime.get('medic')[1] += Math.floor(data[6]['value_monthly']/3600);
-    this.class_playtime.get('engineer')[1] += Math.floor(data[7]['value_monthly']/3600);
-    this.class_playtime.get('heavy assault')[1] += Math.floor(data[8]['value_monthly']/3600);
-    this.class_playtime.get('max')[1] += Math.floor(data[9]['value_monthly']/3600);
-
-    // Load weekly data. Convert time to hrs
-    this.class_playtime.get('light assault')[2] += Math.floor(data[5]['value_weekly']/3600);
-    this.class_playtime.get('medic')[2] += Math.floor(data[6]['value_weekly']/3600);
-    this.class_playtime.get('engineer')[2] += Math.floor(data[7]['value_weekly']/3600);
-    this.class_playtime.get('heavy assault')[2] += Math.floor(data[8]['value_weekly']/3600);
-    this.class_playtime.get('max')[2] += Math.floor(data[9]['value_weekly']/3600);
-
-    // Load daily data. Convert time to hrs
-    this.class_playtime.get('infiltrator')[3] += Math.floor(data[4]['value_daily']/3600);
-    this.class_playtime.get('light assault')[3] += Math.floor(data[5]['value_daily']/3600);
-    this.class_playtime.get('medic')[3] += Math.floor(data[6]['value_daily']/3600);
-    this.class_playtime.get('engineer')[3] += Math.floor(data[7]['value_daily']/3600);
-    this.class_playtime.get('heavy assault')[3] += Math.floor(data[8]['value_daily']/3600);
-    this.class_playtime.get('max')[3] += Math.floor(data[9]['value_daily']/3600);
+    // Load play time of classes for all time (0), monthly(1), weekly (2) and daily (3)
+    for(let i=0; i<classes.length; ++i){
+      this.class_playtime.get(classes[i])[0] += Math.floor(data[i+4]['value_forever']/3600);
+      this.class_playtime.get(classes[i])[1] += Math.floor(data[i+4]['value_monthly']/3600);
+      this.class_playtime.get(classes[i])[2] += Math.floor(data[i+4]['value_weekly']/3600);
+      this.class_playtime.get(classes[i])[3] += Math.floor(data[i+4]['value_daily']/3600);
+    }
 
     // Load vehicle playtime
     for(let i=0;i<data2.length;++i){
@@ -328,21 +307,13 @@ export class Character {
   loadKillsData(data){
     // Load kills by time and faction. Divided by 1 to convert str to int
     let kills = data[16];
-    this.kills.get('all time')[0] = kills['value_forever_vs']/1;
-    this.kills.get('all time')[1] = kills['value_forever_nc']/1;
-    this.kills.get('all time')[2] = kills['value_forever_tr']/1;
+    let period = ['all time', 'monthly', 'weekly', 'daily'];
 
-    this.kills.get('monthly')[0] = kills['value_monthly_vs']/1;
-    this.kills.get('monthly')[1] = kills['value_monthly_nc']/1;
-    this.kills.get('monthly')[2] = kills['value_monthly_tr']/1;
-
-    this.kills.get('weekly')[0] = kills['value_weekly_vs']/1;
-    this.kills.get('weekly')[1] = kills['value_weekly_nc']/1;
-    this.kills.get('weekly')[2] = kills['value_weekly_tr']/1;
-
-    this.kills.get('daily')[0] = kills['value_daily_vs']/1;
-    this.kills.get('daily')[1] = kills['value_daily_nc']/1;
-    this.kills.get('daily')[2] = kills['value_daily_tr']/1;
+    for(let i=0; i<period.length; ++i){
+      this.kills.get(period[i])[0] = kills['value_forever_vs']/1;
+      this.kills.get(period[i])[1] = kills['value_forever_nc']/1;
+      this.kills.get(period[i])[2] = kills['value_forever_tr']/1;
+    }
 
     // Load kills by class. Adds all kills from all factions together for total kills.
     // View of faction kills can be seen in overall stat.
