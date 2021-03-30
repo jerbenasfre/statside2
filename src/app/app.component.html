@@ -1,240 +1,200 @@
-<!--https://tburleson-layouts-demos.firebaseapp.com/#/docs-->
 <div fxLayout='column' fxLayoutAlign='space-between center'>
-  <form class='form-style'>
-  <mat-form-field class='input-style'>
+
+  <h1 class="title"> Statside 2: Plantside 2 Stat Tracker</h1>
+  <p> Pre-Alpha Version </p>
+
+  <!--========== Search Bar ==========-->
+  <form class='input-style form-style'>
+    <mat-form-field class='input-style'>
     <mat-label>Enter Player Name</mat-label>
-      <input matInput #box (keyup.enter)='loadData(box.value)'>
-  </mat-form-field>
-</form>
+        <input matInput #box (keyup.enter)='loadData(box.value)'>
+    </mat-form-field>
+  </form>
 
-<div *ngIf='error'>
-Search Error. Please double check spelling of name.
-</div>
+  <div *ngIf='error' class="error">
+    {{error}}
+  </div>
 
-<div id="container" *ngIf='character'>
-<!--https://material.angular.io/components/-->
-<mat-card class='card'>
-  <mat-card-header>
-    <mat-card-title class='card-title'>Overview Stats</mat-card-title>
-    <mat-card-subtitle class='card-subtitle'>Player: {{character.name}}<br>Data Last Saved: {{character.lastSavedData}}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <p>Shows a general overview of your stats.</p>
-    Faction: {{character.faction}}
-    <br>Total Playtime: {{character.total_playtime}} Hrs
-    <br>Total Kills: {{character.total_kills}}
-    <br>Total Deaths: {{character.total_deaths}}
-    <br>K/D: {{character.total_kills/character.total_deaths}}
-    <br>Total Base Captures: {{character.total_captures}}
-    <br>Total Base Defenses: {{character.total_defenses}}
-    <br>
-    Battle Rank: {{character.br}}
-    Progress to next battle rank ({{character.br_progress}}%)
-    <mat-progress-bar mode='determinate' value='{{character.br_progress}}'></mat-progress-bar>
-    <br>
-    <br>
-    Current Certs: {{character.certs}}
-    <br>Total Certs Earned: {{character.total_certs}}
-    Progress to next cert payout ({{character.certs_progress}}%)
-    <mat-progress-bar mode='determinate' value='{{character.certs_progress}}'></mat-progress-bar>
-  </mat-card-content>
-</mat-card>
+  <!--========== Loading Spinner ==========-->
+  <div class="d-flex justify-content-center" *ngIf='loading'>
+    <div class="spinner-border" role="status" >
+      <span class="sr-only" id="loading"></span>
+    </div>
+  </div>
 
+  <!--========== Character Statistics ==========-->
+  <div id="container" *ngIf='character'>
+    <!--========== Overview Statistics ==========-->
+    <mat-card class='card'>
+      <mat-card-header>
+        <mat-card-title class='card-title'>Overview Stats</mat-card-title>
+        <mat-card-subtitle class='card-subtitle'>Player: {{character.name}}
+          <br>Data Last Saved: {{character.lastSavedData}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>General overview of your stats.</p>
 
-<!--DATA RELATED TO PLAYTIME-->
-<mat-card class='card'>
-  <mat-card-header>
-    <mat-card-title class='card-title'>Infantry Playtime Statistics</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    Shows how long you have played as X class.
+        Faction: {{character.faction}}
+        <br>Total Playtime: {{character.total_playtime.toFixed(2)}} Hrs
+        <br>Total Kills: {{character.total_kills}}
+        <br>Total Deaths: {{character.total_deaths}}
+        <br>K/D: {{(character.total_kills/character.total_deaths).toFixed(2)}}
+        <br>Total Base Captures: {{character.total_captures}}
+        <br>Total Base Defenses: {{character.total_defenses}}<br>
 
-    <app-playtime [playtime]='this.character.class_playtime' [index]='0'
-    data_type= 'infantry' [chartId]="'playtimechart0'"></app-playtime>
-  </mat-card-content>
-</mat-card>
+        Battle Rank: {{character.br}}
+        Progress to next battle rank ({{character.br_progress.toFixed(2)}}%)
 
-<mat-card class='card'>
-  <mat-card-header>
-    <mat-card-title class='card-title'>Vehicle Playtime Statistics</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    Shows how long you have played in X vehicle. API only supports total time.
-    <p> Vehicle Playtime (Hrs): All Time</p>
-    <app-playtime [playtime]='this.character.vehicle_playtime'
-    data_type= 'vehicle' [displayOn]='false' [chartId]="'playtimechart1'"></app-playtime>
-  </mat-card-content>
-</mat-card>
+        <mat-progress-bar mode='determinate'
+        value='{{character.br_progress.toFixed(2)}}'></mat-progress-bar>
+        <br><br>
 
+        Total Certs Earned: {{character.total_certs}}
+        <br>Current Cert Amount: {{character.certs}}
+        Progress to next cert payout ({{character.certs_progress.toFixed(2)}}%)
+        <mat-progress-bar mode='determinate'
+        value='{{character.certs_progress.toFixed(2)}}'></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
 
-<!--DATA RELATED TO BASE CAPTURES AND DEFENSES-->
-<mat-card class='card'>
-  <mat-card-header>
-    <mat-card-title class='card-title'>Base Captures/Defense Ratio</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    Shows the ratio of bases captured or defended.
+    <!--========== Playtime Statistics ==========-->
+    <mat-card class='card'>
+      <mat-card-header>
+        <mat-card-title class='card-title'>Infantry Playtime Statistics</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Hours played as X class.</p>
+        <app-playtime [playtime]='this.character.class_playtime' [index]='0'
+        data_type= 'infantry' [chartId]="'playtimechart0'"></app-playtime>
+      </mat-card-content>
+    </mat-card>
 
-    <p> Base Capture/Defense: Monthly</p>
-    <app-basechart [base_capture]='this.character.facility_captures'
-    [base_defense]='this.character.facility_defenses' [index]='0'
-    [chartId]="'basechart1'"></app-basechart>
+    <mat-card class='card'>
+      <mat-card-header>
+        <mat-card-title class='card-title'>Vehicle Playtime Statistics</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        Hours played in X vehicle. API only supports total time.
+        <p> Vehicle Playtime (Hrs): All Time</p>
+        <app-playtime [playtime]='this.character.vehicle_playtime'
+        data_type= 'vehicle' [chartId]="'playtimechart1'"></app-playtime>
+      </mat-card-content>
+    </mat-card>
 
-    <p> Base Capture/Defense: Weekly</p>
-    <app-basechart [base_capture]='this.character.facility_captures'
-    [base_defense]='this.character.facility_defenses' [index]='1'
-    [chartId]="'basechart2'"></app-basechart>
+    <!--========== Base Capture/Defense Statistics ==========-->
+    <mat-card class='card'>
+      <mat-card-header>
+        <mat-card-title class='card-title'>Base Capture/Defense Ratio</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Ratio of bases captured or defended.</p>
+        <app-basechart [base_capture]='this.character.facility_captures'
+        [base_defense]='this.character.facility_defenses' [index]='0'
+        [chartId]="'basechart1'"></app-basechart>
+      </mat-card-content>
+    </mat-card>
 
-    <p> Base Capture/Defense: Daily</p>
-    <app-basechart [base_capture]='this.character.facility_captures'
-    [base_defense]='this.character.facility_defenses' [index]='2'
-    [chartId]="'basechart3'"></app-basechart>
-  </mat-card-content>
-</mat-card>
+    <mat-card class='card'>
+      <mat-card-header>
+        <mat-card-title class='card-title'>Base Captures</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Bases captured according to time period.</p>
+        Base Capture: Monthly
+        <app-linechart [data]='this.character.facility_captures' [index]='0'
+        [linechartId]="'linechart1'" label='# of Bases'></app-linechart>
 
-<mat-card class='card'>
-  <mat-card-header>
-    <mat-card-title class='card-title'>Base Captures</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    Shows how many bases you captured by time.
-    <p> Base Capture: Monthly</p>
-    <app-linechart [data]='this.character.facility_captures' [index]='0'
-    [linechartId]="'linechart1'" label='# of Bases'></app-linechart>
+        Base Capture: Weekly
+        <app-linechart [data]='this.character.facility_captures' [index]='1'
+        [linechartId]="'linechart2'" label='# of Bases'></app-linechart>
 
-    <p> Base Capture: Weekly</p>
-    <app-linechart [data]='this.character.facility_captures' [index]='1'
-    [linechartId]="'linechart2'" label='# of Bases'></app-linechart>
+        Base Capture: Daily
+        <app-linechart [data]='this.character.facility_captures' [index]='2'
+        [linechartId]="'linechart3'" label='# of Bases'></app-linechart>
+      </mat-card-content>
+    </mat-card>
 
-    <p> Base Capture: Daily</p>
-    <app-linechart [data]='this.character.facility_captures' [index]='2'
-    [linechartId]="'linechart3'" label='# of Bases'></app-linechart>
-  </mat-card-content>
-</mat-card>
+    <mat-card class='card'>
+      <mat-card-header>
+        <mat-card-title class='card-title'>Base Defenses</mat-card-title>
+      </mat-card-header>
+        <mat-card-content>
+          <p>Bases defended according to time period.</p>
+          Base Defense: Monthly
+          <app-linechart [data]='this.character.facility_defenses' [index]='0'
+          [linechartId]="'linechart4'" label='# of Bases'></app-linechart>
 
-<mat-card class='card'>
-  <mat-card-header>
-    <mat-card-title class='card-title'>Base Defenses</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    Shows how many bases you defended by time.
-    <p> Base Defense: Monthly</p>
-    <app-linechart [data]='this.character.facility_defenses' [index]='0'
-    [linechartId]="'linechart4'" label='# of Bases'></app-linechart>
+          Base Defense: Weekly
+          <app-linechart [data]='this.character.facility_defenses' [index]='1'
+          [linechartId]="'linechart5'" label='# of Bases'></app-linechart>
 
-    <p> Base Defense: Weekly</p>
-    <app-linechart [data]='this.character.facility_defenses' [index]='1'
-    [linechartId]="'linechart5'" label='# of Bases'></app-linechart>
+          Base Defense: Daily
+          <app-linechart [data]='this.character.facility_defenses' [index]='2'
+          [linechartId]="'linechart6'" label='# of Bases'></app-linechart>
+        </mat-card-content>
+    </mat-card>
 
-    <p> Base Defense: Daily</p>
-    <app-linechart [data]='this.character.facility_defenses' [index]='2'
-    [linechartId]="'linechart6'" label='# of Bases'></app-linechart>
-  </mat-card-content>
-</mat-card>
+    <!--========== Kills Statistics ==========-->
+    <mat-card class='card'>
+      <mat-card-header>
+        <mat-card-title class='card-title'>Overall Kill Statistics</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Overall kills by faction (including your faction).</p>
+        <app-killchart [kill_map]='this.character.kills' [index]='0'
+        [chartId]="'killchart1'" [kill_type]="'overall'"></app-killchart>
+      </mat-card-content>
+    </mat-card>
 
+    <mat-card class='card'>
+      <mat-card-header>
+        <mat-card-title class='card-title'>Class Kill Statistics</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>All time kills as X infantry class.</p>
+        <app-killchart [kill_map]='this.character.kills_as_infantry'
+        [chartId]="'killchartinfantry'"
+        [kill_type]="'classview'"></app-killchart>
+      </mat-card-content>
+    </mat-card>
 
-<!--DATA RELATED TO KILLS & DEATHS-->
-<mat-card class='card'>
-  <mat-card-header>
-    <mat-card-title class='card-title'>Kill/Death Statistics</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    Shows your overall kills/deaths by time.
-    <p>KD: All Time</p>
-    <app-kdchart [kill_map]='this.character.kills' [death_map]='this.character.deaths'
-    [index]='0' [chartId]="'kdchart1'"></app-kdchart>
-    <p>KD: Monthly</p>
-    <app-kdchart [kill_map]='this.character.kills' [death_map]='this.character.deaths'
-    [index]='1' [chartId]="'kdchart2'"></app-kdchart>
-    <p>KD: Weekly</p>
-    <app-kdchart [kill_map]='this.character.kills' [death_map]='this.character.deaths'
-    [index]='2' [chartId]="'kdchart3'"></app-kdchart>
-    <p>KD: Daily</p>
-    <app-kdchart [kill_map]='this.character.kills' [death_map]='this.character.deaths'
-    [index]='3' [chartId]="'kdchart4'"></app-kdchart>
-  </mat-card-content>
-</mat-card>
+    <mat-card class='card'>
+      <mat-card-header>
+        <mat-card-title class='card-title'>Vehicle Kill Statistics</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>All time kills using X vehicle.</p>
+        <app-killchart [kill_map]='this.character.kills_with_vehicle'
+        [chartId]="'killchartvehicle'" [displayLegend]='false'
+        [kill_type]="'vehicleview'"></app-killchart>
+      </mat-card-content>
+    </mat-card>
 
-<mat-card class='card'>
-  <mat-card-header>
-    <mat-card-title class='card-title'>Overall Kill Statistics</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <p>Shows your overall kills by time and faction</p>
-    <br>(including your faction).
-    Kills: All Time
-    <app-killchart [kill_map]='this.character.kills' [index]='0'
-    [chartId]="'killchart1'" [kill_type]="'overall'"></app-killchart>
-    Kills: Monthly
-    <app-killchart [kill_map]='this.character.kills' [index]='1'
-    [chartId]="'killchart2'" [kill_type]="'overall'"></app-killchart>
-    Kills: Weekly
-    <app-killchart [kill_map]='this.character.kills' [index]='2'
-    [chartId]="'killchart3'" [kill_type]="'overall'"></app-killchart>
-    Kills: Daily
-    <app-killchart [kill_map]='this.character.kills' [index]='3'
-    [chartId]="'killchart4'" [kill_type]="'overall'"></app-killchart>
-  </mat-card-content>
-</mat-card>
+    <!--========== Death Statistics ==========-->
+    <mat-card class='card'>
+      <mat-card-header>
+        <mat-card-title class='card-title'>Overall Death Statistics</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Overall deaths by faction (including your faction).</p>
+        <app-deathchart [death_map]='this.character.deaths' [index]='0'
+        [chartId]="'deathchart1'" [death_type]="'overall'"></app-deathchart>
+      </mat-card-content>
+    </mat-card>
 
-<mat-card class='card'>
-  <mat-card-header>
-    <mat-card-title class='card-title'>Class Kill Statistics</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <p>Shows your kills as X class for all time.</p>
-    <app-killchart [kill_map]='this.character.kills_as_infantry' [index]='0'
-    [chartId]="'killchart5'" [kill_type]="'infantry'"></app-killchart>
-  </mat-card-content>
-</mat-card>
-
-<mat-card class='card'>
-  <mat-card-header>
-    <mat-card-title class='card-title'>Vehicle Kill Statistics</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <p>Shows your kills inside X vehicle for all time.</p>
-    <app-killchart [kill_map]='this.character.kills_with_vehicle' [index]='0'
-    [chartId]="'killchart6'" [displayLegend]='false' [kill_type]="'vehicle'"></app-killchart>
-  </mat-card-content>
-</mat-card>
-
-<mat-card class='card'>
-  <mat-card-header>
-    <mat-card-title class='card-title'>Overall Death Statistics</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    Shows your overall deaths by time and by faction
-    <br>(including your faction).
-    <p>Deaths: All Time</p>
-    <app-deathchart [death_map]='this.character.deaths' [index]='0'
-    [chartId]="'deathchart1'" [death_type]="'overall'"></app-deathchart>
-    <p>Deaths: Monthly</p>
-    <app-deathchart [death_map]='this.character.deaths' [index]='1'
-    [chartId]="'deathchart2'" [death_type]="'overall'"></app-deathchart>
-    <p>Deaths: Weekly</p>
-    <app-deathchart [death_map]='this.character.deaths' [index]='2'
-    [chartId]="'deathchart3'" [death_type]="'overall'"></app-deathchart>
-    <p>Deaths: Daily</p>
-    <app-deathchart [death_map]='this.character.deaths' [index]='3'
-    [chartId]="'deathchart4'" [death_type]="'overall'"></app-deathchart>
-  </mat-card-content>
-</mat-card>
-
-<mat-card class='card'>
-  <mat-card-header>
-    <mat-card-title class='card-title'>Class Death Statistics</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    Shows the class of your killer or what class you were when you died.
-    <br> All time statistics.
-    <p>Class of killer:</p>
-    <app-deathchart [death_map]='this.character.killed_by_infantry' [index]='0'
-    [chartId]="'deathchart5'" [death_type]="'infantry'"></app-deathchart>
-    <p>Your Class when killed:</p>
-    <app-deathchart [death_map]='this.character.class_deaths' [index]='0'
-    [chartId]="'deathchart6'" [death_type]="'infantry'"></app-deathchart>
-  </mat-card-content>
-</mat-card>
-</div>
+    <mat-card class='card'>
+      <mat-card-header>
+        <mat-card-title class='card-title'>Class Death Statistics</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Death broken down by infantry class. API only supports all time.</p>
+        Class of killer:
+        <app-deathchart [death_map]='this.character.killed_by_infantry'
+        [chartId]="'deathchart2'" [death_type]="'infantry'"></app-deathchart>
+        Your Class when killed:
+        <app-deathchart [death_map]='this.character.class_deaths'
+        [chartId]="'deathchart3'" [death_type]="'infantry'"></app-deathchart>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

@@ -11,7 +11,9 @@ export class AppComponent {
   title = 'Statside 2: A Planetside 2 Stat Tracker';
   character!: Character;
   characters !: Array<Character>;
-  error: boolean;
+  error: String;
+
+  loading = false;
 
   constructor(private _ps2ApiService: ps2ApiService){
   }
@@ -23,20 +25,28 @@ export class AppComponent {
   loadData(name: string){
 
     if (name.trim() === ''){
-      this.error = true;
+      this.error = 'Character name cannot be empty.';
       return;
     }
     else
-      this.error = false;
+      this.error = '';
 
     this.character = null;  // Ensures data will be reloaded if a new char is searched
+    this.loading = true;
 
     this._ps2ApiService.getCharacterId(name).subscribe(
       data =>{
+        // Check if server is down
+        if (data['error']){
+          this.error = 'Error when requesting data from Planetside 2 API server.'
+          return;
+        }
 
         // If no results, leave character as null
-        if (data.length == 0)
+        if (data.length == 0){
+          this.error = 'No results found for character: ' + name;
           return;
+        }
 
         let character_id = data['character_list'][0]['character_id'];
 
@@ -63,6 +73,8 @@ export class AppComponent {
             this.character.loadDeathData(stats);
 
             this.character.loadBaseData(stats['stat_history']);
+
+            this.loading = false;
           }
         );
       }

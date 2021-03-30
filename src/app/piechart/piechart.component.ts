@@ -23,6 +23,7 @@ export class PiechartComponent implements OnInit {
     // First change is the initialization of graph. Subsequent changes are
     // updates to graph.
     if(changes['data'].firstChange != true){
+      this.myChart.destroy();
       this.myChart = new Chart(this.pieChartId, {
         type: 'pie',
         data: {
@@ -36,7 +37,10 @@ export class PiechartComponent implements OnInit {
             },//end of data
         options: {
           legend: {
-              display: this.displayLegend
+            display: this.displayLegend,
+            labels:{
+              boxWidth: 15
+            }
           }
         }
       });//end of new Chart
@@ -75,7 +79,10 @@ export class PiechartComponent implements OnInit {
             },//end of data
         options: {
           legend: {
-              display: this.displayLegend
+            display: this.displayLegend,
+            labels:{
+              boxWidth: 15
+            }
           }
         }
       });//end of new Chart

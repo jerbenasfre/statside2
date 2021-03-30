@@ -3,7 +3,21 @@ import { Chart } from 'node_modules/chart.js';
 
 @Component({
   selector: 'app-deathchart',
-  template: `<app-piechart *ngIf='data' [data]='data' [labels]='labels' [colors]='colors' [pieChartId]='chartId' [displayLegend]='displayLegend'></app-piechart>`
+  template: `
+  <div *ngIf='index != null'>
+    <br>
+    <label id="playtimeTimeFrame">Select Time Frame</label>
+    <br>
+    <mat-radio-group
+      aria-labelledby="playtimeTimeFrame"
+      [(ngModel)]="timeSelected">
+      <mat-radio-button *ngFor="let time of times" [value]="time" (change)="radioChange($event)">
+        {{time}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <app-piechart *ngIf='data' [data]='data' [labels]='labels' [colors]='colors' [pieChartId]='chartId' [displayLegend]='displayLegend'></app-piechart>`
 })
 export class DeathchartComponent implements OnInit {
   // death_map can either be time/faction map or class death map
@@ -18,27 +32,20 @@ export class DeathchartComponent implements OnInit {
   colors = [];
   displayLegend = true;
 
+  timeSelected: string = 'all time';
+  times: string[] = ['all time', 'monthly', 'weekly', 'daily'];
+
   constructor() { }
 
   ngOnInit(): void {
     // if general view,
     //  just show factions
     //  and get data according to chosen timeframe (this.index)
-    if(this.death_type === 'overall'){
+    if(this.death_type == 'overall'){
       this.labels = ['VS','NC','TR'];
+      this.data = this.death_map.get('all time');
 
-      if(this.index === 0){
-        this.data = this.death_map.get('all_time');
-      }
-      else if (this.index === 1){
-        this.data = this.death_map.get('monthly');
-      }
-      else if (this.index === 2){
-        this.data = this.death_map.get('weekly');
-      }
-      else{
-        this.data = this.death_map.get('daily');
-      }
+      console.log(this.data)
     }
     // Other wise display data in terms of classes
     else{
@@ -59,5 +66,19 @@ export class DeathchartComponent implements OnInit {
     'rgba(75, 100, 192, 0.8)',
     'rgba(153, 102, 255, 0.8)',
     'rgba(255, 159, 64, 0.8)'];
+  }
+
+  radioChange(event){
+    console.log(event.value)
+    if (event.value == 'all time')
+      this.data = this.death_map.get('all time');
+    if (event.value == 'monthly')
+      this.data = this.death_map.get('monthly');
+    else if(event.value == 'weekly')
+      this.data = this.death_map.get('weekly');
+    else if(event.value == 'daily')
+      this.data = this.death_map.get('daily');
+
+    this.labels = ['VS','NC','TR'];
   }
 }
