@@ -6,7 +6,7 @@
   <!--========== Search Bar ==========-->
   <form class='input-style form-style'>
     <mat-form-field class='input-style'>
-    <mat-label>Enter Player Name</mat-label>
+    <mat-label>Enter Player Name (i.e. Aryken)</mat-label>
         <input matInput #box (keyup.enter)='loadData(box.value)'>
     </mat-form-field>
   </form>
@@ -92,46 +92,6 @@
         [base_defense]='this.character.facility_defenses' [index]='0'
         [chartId]="'basechart1'"></app-basechart>
       </mat-card-content>
-    </mat-card>
-
-    <mat-card class='card'>
-      <mat-card-header>
-        <mat-card-title class='card-title'>Base Captures</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Bases captured according to time period.</p>
-        Base Capture: Monthly
-        <app-linechart [data]='this.character.facility_captures' [index]='0'
-        [linechartId]="'linechart1'" label='# of Bases'></app-linechart>
-
-        Base Capture: Weekly
-        <app-linechart [data]='this.character.facility_captures' [index]='1'
-        [linechartId]="'linechart2'" label='# of Bases'></app-linechart>
-
-        Base Capture: Daily
-        <app-linechart [data]='this.character.facility_captures' [index]='2'
-        [linechartId]="'linechart3'" label='# of Bases'></app-linechart>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card class='card'>
-      <mat-card-header>
-        <mat-card-title class='card-title'>Base Defenses</mat-card-title>
-      </mat-card-header>
-        <mat-card-content>
-          <p>Bases defended according to time period.</p>
-          Base Defense: Monthly
-          <app-linechart [data]='this.character.facility_defenses' [index]='0'
-          [linechartId]="'linechart4'" label='# of Bases'></app-linechart>
-
-          Base Defense: Weekly
-          <app-linechart [data]='this.character.facility_defenses' [index]='1'
-          [linechartId]="'linechart5'" label='# of Bases'></app-linechart>
-
-          Base Defense: Daily
-          <app-linechart [data]='this.character.facility_defenses' [index]='2'
-          [linechartId]="'linechart6'" label='# of Bases'></app-linechart>
-        </mat-card-content>
     </mat-card>
 
     <!--========== Kills Statistics ==========-->
