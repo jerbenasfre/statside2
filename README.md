@@ -12,12 +12,13 @@ StudentID: 25097522
 	The data should be loaded under 1 minute.
 
 ## Planned changes:
-   * Create base components to display charts and change current classes for statistics to pass data to those charts to be displayed.
-   * Enable toggle for time frame of the charts instead of displaying them all at once.
+   * Refactor code in character model for improved readibility.
+   * Enable toggle for time frame for line charts.
    * Allow users to view two characters side by side for comparison.
+   * Revamp layout of website. Break off statistics in sections for a more combined view.
 
 ## Current Issues:
-   * New players have missing fields in their data. Need to revise the way I grab information for certain statistics.
+   * New players have missing fields in their data. Need to revise the way I grab information for certain statistics (Fix coming soon).
 
 ## Citation
 
